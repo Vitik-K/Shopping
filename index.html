@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+	
+		<!-------------------- HEAD------------------------>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="author" content="Kat Vitik">
+		<!-- Bootstrap 5 link-->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+         <!-- font Awesome link-->
+        <script src="https://kit.fontawesome.com/682d0a804b.js" crossorigin="anonymous"></script>
+        <title>ICS 128 Kat's Shopping Projects</title>
+        <!-------------------- CSS------------------------>
+		<link rel="stylesheet" type="text/css" href="includes/css/stylesheetFinal.css">
+
+	</head>
+		<!-------------------- BODY------------------------>
+	<body>
+		<!-------------------- NavBar------------------------>
+		<nav class="navbar navbar-expand-lg bg-dark " data-bs-theme="dark">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#">Kat's Shopping Project</a>
+				<button id="viewCart" class="btn btn-dark btn-outline-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">See Cart</button>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+				</div>
+			</div>
+		</nav>
+	<!-------------------- OffCanvas------------------------>
+	
+	<div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+	  <div class="offcanvas-header">
+		<h5 class="offcanvas-title" id="offcanvasScrollingLabel">Your Cart</h5>
+		<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+	  </div>
+	  <div class="offcanvas-body">
+		<div id="currencyDiv" class="row">
+			<div>
+				<span id="currencyDisplay">Please select your currency: </span>
+			</div>
+			<div>
+					<form id="currencyRadio">
+						<input type="radio" class="btn-check" name="options" id="canadian" autocomplete="off" checked>
+						<label class="btn btn-dark btn-outline-info" for="canadian">Canadian $</label>
+						<input type="radio" class="btn-check" name="options" id="usa" autocomplete="off">
+						<label class="btn btn-dark btn-outline-info" for="usa">US $</label>
+						<input type="radio" class="btn-check" name="options" id="british" autocomplete="off">
+						<label class="btn btn-dark btn-outline-info" for="british">British £</label>
+					</form>
+			</div>
+			<div class="col-6">
+				<span id="currencyDisplay"></span>
+			</div>
+		</div>
+		<div id = "tableDiv">
+			<table class="table">
+				<thead>
+				  <tr>
+					<th scope="col">Item#</th>
+					<th scope="col">Description</th>
+					<th scope="col">Price</th>
+					<th scope="col">Quantity</th>
+				  </tr>
+				</thead>
+				<tbody id="cartDisplayTable">
+				</tbody>
+				<thead>
+					<tr>
+					  <th scope="col">Subtotal</th>
+					  <td></td>
+					  <td><span id="displaySubtotal">0.00$</span></td>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div id="checkoutDiv" class="row">
+			<div class="col-6">
+				<button id="checkoutButton" class="btn btn-dark btn-outline-info" type="button">Checkout</button>
+			</div>
+			<div class="col-6">
+				<button id="emptyCartButton" class="btn btn-dark btn-outline-danger" type="button">Empty Cart</button>
+			</div>
+		</div>
+		<div>
+			<h5 id="cartIsEmptyMessage"></h5>
+			<h5 id="currencyErrorOffCan"></h5>
+		</div>
+	  </div>
+	</div>
+
+	<!-------------------- Payment Modal------------------------>
+
+	<div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="paymentHeading">Checkout - Payment</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div id="paymentDiv">
+						<form id="paymentForm">
+							<div id="ccError" class="errorMessage"></div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">Credit Card Number: </span>
+								<input id="ccInput" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+							</div>
+							<div class="input-group mb-3">
+								<span class="input-group-text">MM:</span>
+									<select id="ccMonth" class="form-select form-select-sm" aria-label=".form-select-sm example">
+										<option selected  value="none">Select a Month: </option>
+										<option value="1">01</option>
+										<option value="2">02</option>
+										<option value="3">03</option>
+										<option value="4">04</option>
+										<option value="5">05</option>
+										<option value="6">06</option>
+										<option value="7">07</option>
+										<option value="8">08</option>
+										<option value="9">09</option>
+										<option value="10">10</option>
+										<option value="11">11</option>
+										<option value="12">12</option>
+									</select>
+									<span class="input-group-text">YYYY:</span>
+									<select id="ccYear" class="form-select form-select-sm" aria-label=".form-select-sm example">
+										<option selected value="none">Select a year:</option>
+										<option value="2023">2023</option>
+										<option value="2024">2024</option>
+										<option value="2025">2025</option>
+										<option value="2026">2026</option>
+										<option value="2027">2027</option>
+									</select>
+							</div>
+							<div id="securityCodeError" class="errorMessage"></div>
+							<div class="input-group mb-3">
+								<span class="input-group-text">Security Code:</span>
+								<input id="codeInput" type="text" aria-label="cardCode" class="form-control">
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-dark btn-outline-danger" data-bs-dismiss="modal">Close</button>
+					<button id="toBillingButton" class="btn btn-dark btn-outline-info" type="button" >Continue to Billing <i class="fa-solid fa-arrow-right"></i></button>
+				</div>
+		  </div>
+		</div>
+	  </div>
+
+	  	<!-------------------- Billing Modal------------------------>
+
+	<div class="modal fade" id="billingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="billingHeading">Checkout - Billing</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div id="billingDiv">
+						<form id="billingForm">
+							<div id="fNameError" class="errorMessage"></div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">First Name: </span>
+								<input id="fName" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+							</div>
+							<div id="lNameError" class="errorMessage"></div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">Last Name: </span>
+								<input id="lName" type="text" class="form-control"  aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+							</div>
+							<div id="emailError" class="errorMessage"></div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">Email: </span>
+								<input id="email1" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+							</div>
+							<div id="phoneError" class="errorMessage"></div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">Phone #: </span>
+								<input id="phoneNum" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+							</div>
+							<div id="billError" class="errorMessage"></div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">Billing Address: </span>
+								<input id="billAddress" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+							</div>
+							<div id="cityError" class="errorMessage"></div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">City: </span>
+								<input id="city" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+							</div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">Country: </span>
+								<select id = "country" class="form-select form-select-sm" aria-label=".form-select-sm example">
+									<option selected value="none">Select a Country</option>
+									<option value="CA">Canada</option>
+								</select>
+							</div>
+							<div class="input-group mb-3">
+								<span class="input-group-text">Province:</span>
+								<select id = "province" class="form-select form-select-sm" aria-label=".form-select-sm example">
+									<option selected value="none">Select a Province</option>
+									<option value="AB">Alberta</option>
+									<option value="BC">British Colombia</option>
+									<option value="MB">Manitoba</option>
+									<option value="NB">New Brunswick</option>
+									<option value="NL">Newfoundland & Labrador</option>
+									<option value="NT">Northwest Territories</option>
+									<option value="NS">Nova Scotia</option>
+									<option value="NU">Nunavut</option>
+									<option value="ON">Ontario</option>
+									<option value="PE">P.E.I.</option>
+									<option value="QC">Quebec</option>
+									<option value="SK">Saskatchewan</option>
+									<option value="YT">Yukon</option>
+								</select>
+							</div>
+							<div id="postalError" class="errorMessage"></div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">Postal Code: </span>
+								<input id="postalCode1" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button id="backToPaymentButton" class="btn btn-dark btn-outline-info" type="button" data-bs-toggle="modal" data-bs-target="#paymentModal"><i class="fa-solid fa-arrow-left"></i> Back to Payment</button>
+					<button id="toShippingButton" class="btn btn-dark btn-outline-info" type="button">Continue to Shipping <i class="fa-solid fa-arrow-right"></i></button>
+				</div>
+			</div>
+		</div>
+	  </div>
+
+	  	<!-------------------- Shipping Modal------------------------>
+
+		  <div class="modal fade" id="shippingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title" id="shippingHeading">Checkout - Shipping</h5>
+				  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div id="sameAsOptionDiv" class="form-check">
+						<input class="form-check-input" type="checkbox" id="sameAsOption" >
+						<label class="form-check-label" for="sameAsOption">
+						  Shipping information same as Billing
+						</label>
+					</div>
+					<div id="shippingDiv">
+						<form id="shippingForm">
+							<div id="shipFNameError" class="errorMessage"></div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">First Name: </span>
+								<input id="fNameShipping" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+							</div>
+							<div id="shipLNameError" class="errorMessage"></div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">Last Name: </span>
+								<input id="lNameShipping" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+							</div>
+							<div id="shipAddressError" class="errorMessage"></div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">Shipping Address: </span>
+								<input  id="shippingAddress" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+							</div>
+							<div id="shipCityError" class="errorMessage"></div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">City: </span>
+								<input id="cityShipping" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+							</div>
+							<div class="input-group mb-3">
+								<span class="input-group-text">Province:</span>
+								<select id = "provinceShipping" class="form-select form-select-sm" aria-label=".form-select-sm example">
+									<option selected value="none">Select a Province</option>
+									<option value="AB">Alberta</option>
+									<option value="BC">British Colombia</option>
+									<option value="MB">Manitoba</option>
+									<option value="NB">New Brunswick</option>
+									<option value="NL">Newfoundland & Labrador</option>
+									<option value="NT">Northwest Territories</option>
+									<option value="NS">Nova Scotia</option>
+									<option value="NU">Nunavut</option>
+									<option value="ON">Ontario</option>
+									<option value="PE">P.E.I.</option>
+									<option value="QC">Quebec</option>
+									<option value="SK">Saskatchewan</option>
+									<option value="YT">Yukon</option>
+								</select>
+							</div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">Country: </span>
+								<select id = "countryShipping" class="form-select form-select-sm" aria-label=".form-select-sm example">
+									<option selected value="none">Select a Country</option>
+									<option value="CA">Canada</option>
+								</select>
+							</div>
+							<div id="shipPostalError" class="errorMessage"></div>
+							<div class="input-group mb-3">
+								<span class="input-group-text" id="inputGroup-sizing-default">Postal Code: </span>
+								<input id="postalCode1Shipping" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button id="backToBillingButton" class="btn btn-dark btn-outline-info" type="button" data-bs-toggle="modal" data-bs-target="#billingModal">  <i class="fa-solid fa-arrow-left"></i> Back to Billing</button>
+					<button id="toOrderButton" class="btn btn-dark btn-outline-info" type="button">Continue to Order Confirmation <i class="fa-solid fa-arrow-right"></i></button>
+				</div>
+			  </div>
+			</div>
+		  </div>
+		<!-------------------- Order Confirmation Modal------------------------>
+		<div class="modal fade" id="orderModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title" id="orderHeading">Checkout - Order Confirmation</h5>
+				  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div id="finalOrderDiv">
+						<table id="finalOrderTable" class="table">
+							<thead>
+							  <tr>
+								<th scope="col">Item#</th>
+								<th scope="col">Description</th>
+								<th scope="col">Price</th>
+								<th scope="col">Quantity</th>
+							  </tr>
+							</thead>
+							<tbody id="finalOrder">
+							</tbody>
+							<thead>
+								<tr>
+									<th scope="col">Subtotal</th>
+										<td></td>
+										<td></td>
+										<td><span id="finalSubtotal">0.00</span></td>
+								</tr>
+								<tr>
+									<th scope="col">Shipping</th>
+										<td></td>
+										<td></td>
+										<td> <span id="finalShipping">0.00</span> </td>
+								</tr>
+								<tr>
+									<th scope="col">Tax</th>
+										<td></td>
+										<td></td>
+										<td> <span id="finalTax">0.00</span></td>
+								</tr>
+								<tr>
+									<th scope="col">Total</th>
+										<td></td>
+										<td></td>
+										<td> <span id="finalTotal">0.00</span><span id="finalTotalCurrency"></span></td>
+								</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button id="backToShippingButton" class="btn btn-dark btn-outline-info" type="button" data-bs-toggle="modal" data-bs-target="#shippingModal"><i class="fa-solid fa-arrow-left"></i> Back to Shipping </button>
+					<button id="confirmOrderButton" class="btn btn-dark btn-outline-success" type="button">CONFIRM <i class="fa-solid fa-check" style="color: #18b14a;"></i></button>
+				</div>
+			  </div>
+			</div>
+		</div>
+		<!-------------------- Success Confirmation Modal------------------------>
+		<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <h5 class="modal-title" id="orderHeading">Order Successful</h5>
+				  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<h5> Your order has been successfully submitted. Thank you for shopping with us.</h5>	
+				</div>
+			  </div>
+			</div>
+		</div>
+		<!-------------------- Error Modal------------------------>
+		<div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="orderHeading">Error</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<h6>There has been an error with your order, please try again:</h6>
+					<p id="errorCode"></p>
+				</div>
+				</div>
+			</div>
+		</div>
+	<!--------------------Cards------------------------>
+	<div id="api1Error" class="container-fluid"></div>
+	<div id="api2Error" class="container-fluid"></div>
+	<div id="api3Error" class="container-fluid"></div>
+	<div id="api4Error" class="container-fluid"></div>
+	<div id="productCards" class="row"></div>
+	</body>
+    <!-------------------- JAVASCRIPT/Jquery------------------------>
+	
+	<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <script src="includes/js/128Final.js" defer></script>
+		
+	</body>
+	
+</html>

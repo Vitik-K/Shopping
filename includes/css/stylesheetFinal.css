@@ -1,0 +1,53 @@
+/* .......................................Custom variables....................................... */
+:root {
+    --ctRed:#fc6565;
+    --ctDarkBlue:#07222e;
+    --ctHighLight:#f7975f;
+}
+/* .......................................Body styling....................................... */
+body{
+    background-color: var(--ctDarkBlue);
+}
+
+#api1Error{
+    color: var(--ctRed); /*Error code text color*/
+    text-align: center;
+}
+#api2Error{
+    color: var(--ctRed); /*Error code text color*/
+    text-align: center;
+}
+#api3Error{
+    color: var(--ctRed); /*Error code text color*/
+    text-align: center;
+}
+#api4Error{
+    color: var(--ctRed); /*Error code text color*/
+    text-align: center;
+}
+
+.errorMessage{
+    font-size: small;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* .......................................Card styling....................................... */
+ .card{ /*gives cards margin and padding */
+    margin: 10%;
+    padding: 2%;
+    border-radius: 7% / 7%; /* more rounded edges on cards*/
+}
+.card-img-top{
+    border-radius: 7% / 7%; /* more rounded edges on card images (only noticable with hover)*/
+}
+.card:hover{
+    transform: scale(1.05); /* increase size of card on hover by 5%*/
+    background-color: var(--ctHighLight); /* highlight card on hover*/
+}
+/* .......................................Offcanvas Style....................................... */
+#cartIsEmptyMessage{
+    color: var(--ctRed); /*Error code text color*/
+   margin-top: 10%;
+}
+
+
